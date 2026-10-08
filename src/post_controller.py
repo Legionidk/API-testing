@@ -1,9 +1,18 @@
 import requests
 
 
-def get_posts(query: str = None, limit: int = 0):
+def get_posts(limit: int = 0):
     response = requests.get(
         f"https://dummyjson.com/posts",
+        params={"limit": limit},
+    )
+
+    return response.json()
+
+
+def search_posts(query: str, limit: int = 0):
+    response = requests.get(
+        f"https://dummyjson.com/posts/search",
         params={"limit": limit, "q": query},
     )
 
@@ -21,5 +30,5 @@ def create_post(user_id: int, id: int, title: str):
         headers={"Content-Type": "application/json"},
         json={"userId": user_id, "id": id, "title": title},
     )
-    print(response.json())
+    
     return response.json()
